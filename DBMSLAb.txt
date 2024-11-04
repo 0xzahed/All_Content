@@ -1,0 +1,270 @@
+Microsoft Windows [Version 10.0.19045.5011]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 122
+Server version: 10.4.24-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>
+MariaDB [(none)]>
+MariaDB [(none)]> create database Lab7;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> use Lab7;
+Database changed
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> create table Student(
+    -> ID int primary key auto_increament,
+    -> Age float);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '
+Age float)' at line 2
+MariaDB [Lab7]> create table Student(
+    -> ID int primary key auto_increment,
+    -> Age float);
+Query OK, 0 rows affected (0.023 sec)
+
+MariaDB [Lab7]> Insert into Student values(0,22);
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [Lab7]> select * from Student
+    ->
+    ->
+    -> ;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
++----+------+
+1 row in set (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
++----+------+
+1 row in set (0.000 sec)
+
+MariaDB [Lab7]> Start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> Insert into Student Values(0,22);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> Insert into Student Values(0,23);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> commit;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> Insert into Student Values (0,24);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   23 |
+|  4 |   24 |
++----+------+
+4 rows in set (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> Rollback;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   23 |
++----+------+
+3 rows in set (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> Start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> Insert into Student Values(0,25.5);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> savepoint s1;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> update Student set Age=Age+5 where ID=5;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   23 |
+|  5 | 30.5 |
++----+------+
+4 rows in set (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> rollback to s1;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   23 |
+|  5 | 25.5 |
++----+------+
+4 rows in set (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> commit;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> Start transaction;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> update Student set Age=Age+5 where ID=5;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> savepoint s1;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> delete from Student where Age>25;
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   23 |
++----+------+
+3 rows in set (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> savepoint s2;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> Insert into Student Values(0,35);
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> savepoint s3;
+Query OK, 0 rows affected (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> update Student set Age=Age+2 where ID=3;
+Query OK, 1 row affected (0.000 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   25 |
+|  6 |   35 |
++----+------+
+4 rows in set (0.000 sec)
+
+MariaDB [Lab7]> create trigger triggerforinsert
+    -> before insert
+    -> on Student
+    -> for each row
+    -> set new.Age=new.Age+10;
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   25 |
+|  6 |   35 |
++----+------+
+4 rows in set (0.002 sec)
+
+MariaDB [Lab7]> Insert into Student Values(0,50);
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [Lab7]> Insert into Student Values(0,60);
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]> select * from Student;
++----+------+
+| ID | Age  |
++----+------+
+|  1 |   22 |
+|  2 |   22 |
+|  3 |   25 |
+|  6 |   35 |
+|  7 |   60 |
+|  8 |   70 |
++----+------+
+6 rows in set (0.000 sec)
+
+MariaDB [Lab7]>
+MariaDB [Lab7]>
+MariaDB [Lab7]>
