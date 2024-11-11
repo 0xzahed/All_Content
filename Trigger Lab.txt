@@ -1,0 +1,22 @@
+
+CREATE TABLE customer (
+    id INT PRIMARY KEY,
+    name VARCHAR(50), MembershipStatus VARCHAR(50), points varchar(50)
+);
+
+INSERT INTO customer (id, name) VALUES
+(1, 'x'),
+(2, 'y'),
+(3, 'z'),
+(4, 'a'),
+(5, 'b'),
+(6, 'c');
+INSERT INTO customer (id, name, MembershipStatus, points) VALUES
+(1, 'x', 'regular', '50'),
+(2, 'y', 'premium', '150'),
+(3, 'z', 'premium', '300'),
+(4, 'a', 'regular', '75'),
+(5, 'b', 'regular', '100'),
+(6, 'c', 'premium', '1000');
+
+create view customer.name AS select * from customer where MembershipStatus = 'regular';
