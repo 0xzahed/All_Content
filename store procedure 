@@ -1,0 +1,69 @@
+The image shows examples of SQL stored procedures and their usage. I'll explain the solutions step-by-step:
+
+1. GetCustomerInfo() Stored Procedure
+
+Procedure Code:
+
+DELIMITER //
+CREATE PROCEDURE GetCustomerInfo()
+BEGIN
+  SELECT * FROM Customers;
+END //
+DELIMITER ;
+
+To Call the Procedure:
+
+CALL GetCustomerInfo();
+
+
+2. GetCustomer(customerID) Stored Procedure
+
+Procedure Code:
+
+DELIMITER //
+CREATE PROCEDURE GetCustomer(IN customerID INT)
+BEGIN
+  SELECT * FROM Customers WHERE CustomerID = customerID;
+END //
+DELIMITER ;
+
+To Call the Procedure:
+
+CALL GetCustomer('Germany'); -- Replace 'Germany' with a valid customer ID as needed
+
+
+3. GetCustomersByCityAndCountry(targetCity, targetCountry) Stored Procedure
+
+Procedure Code:
+
+DELIMITER //
+CREATE PROCEDURE GetCustomersByCityAndCountry(IN targetCity VARCHAR(255), IN targetCountry VARCHAR(255))
+BEGIN
+  SELECT * FROM Customers WHERE City = targetCity AND Country = targetCountry;
+END //
+DELIMITER ;
+
+To Call the Procedure:
+
+CALL GetCustomersByCityAndCountry('London', 'UK');
+
+
+4. GetCustomerCountByCountry(targetCountry, totalCustomers) Stored Procedure
+
+Procedure Code:
+
+DELIMITER //
+CREATE PROCEDURE GetCustomerCountByCountry(IN targetCountry VARCHAR(255), OUT totalCustomers INT)
+BEGIN
+  SELECT COUNT(*) INTO totalCustomers FROM Customers WHERE Country = targetCountry;
+END //
+DELIMITER ;
+
+To Call the Procedure and Get the Result:
+
+CALL GetCustomerCountByCountry('Mexico', @result);
+SELECT @result;
+
+
+These procedures are used for retrieving customer data and counting based on specific parameters. Make sure that the Customers table exists in your database and has appropriate columns like CustomerID, City, and Country for these procedures to work correctly.
+
