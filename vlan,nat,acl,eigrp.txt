@@ -1,0 +1,90 @@
+NAT
+Static NAT
+
+ip route 0.0.0.0 0.0.0.0 se0/3/0
+int gig0/0
+ip nat inside
+ex
+int se0/3/0
+ip nat outside
+ex
+ip nat inside source static 192.168.1.11 200.0.0.51
+ip nat inside source static 192.168.1.12 200.0.0.52
+ip nat inside source static 192.168.1.13 200.0.0.53
+ip nat inside source static 192.168.1.14 200.0.0.54
+
+
+Dynamic NAT
+ip route 0.0.0.0 0.0.0.0 se0/3/0
+int gig0/0
+ip nat inside
+ex
+int se0/3/0
+ip nat outside
+ex
+ip nat pool Dpool 200.0.0.11 200.0.0.20 netmask 255.255.255.0
+access-list 1 permit 192.168.1.0 0.0.0.255
+ip nat inside source list 1 pool Dpool
+
+
+
+
+EIGRP
+1st router
+router eigrp 1
+network 192.168.1.0
+network 11.0.0.0
+
+2nd router
+router eigrp 1
+network 11.0.0.0
+network 12.0.0.0
+network 192.168.2.0
+
+3rd router
+router eigrp 1
+network 12.0.0.0
+network 192.168.3.0
+
+
+
+VLAN
+
+vlan 10
+name IT
+exit
+
+vlan 20
+name HQ
+exit
+
+int fa0/1
+switchport access  vlan 20
+exit
+int fa0/2
+switchport access  vlan 20
+exit
+int fa0/3
+switchport access  vlan 10
+exit
+int fa0/4
+switchport access  vlan 10
+exit
+int fa0/5
+switchport mode trunk 
+exit
+interface range fa0/1-4 
+switchport mode access 
+exit
+
+
+
+ACL
+use rip routing
+
+router 2
+access-list 1 deny 192.168.2.12 0.0.0.255
+access-list 1 permit 0.0.0.0 255.255.255.255
+int gig0/1
+ip access-group 1 out
+wr
